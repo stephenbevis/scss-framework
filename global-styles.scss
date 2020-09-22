@@ -1,0 +1,430 @@
+@import './global-variables.scss';
+
+// Initial Global Reset
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: $global-font;
+}
+
+// Colors
+$colors: (
+    primary:$primary,
+    success:$success,
+    info:$info,
+    warning:$warning,
+    danger:$danger,
+    light:$light,
+    dark: $dark,
+    white: $white,
+    transparent: $transparent
+);
+
+// Screen Width Breakpoints
+$breakpoints: (
+    xs: $xs,
+    sm: $sm,
+    md: $md,
+    lg: $lg,
+    xl: $xl
+);
+
+// Sides
+$sides: (
+    t:'top',
+    b:'bottom',
+    l:'left',
+    r:'right'
+);
+
+// Browser Prefixes
+$browser-prefixes: (
+    firefox: moz,
+    safari: webkit,
+    ie: ms
+);
+
+// Floats
+
+$floats: (
+    left,
+    right,
+    none
+);
+
+@each $float in $floats {
+    .float-#{$float}{
+        float: $float !important;
+    }
+
+    @each $breakpoint, $value in $breakpoints {
+        @if $breakpoint == xs {
+            @media screen and (max-width: $value + px) {
+                .float-#{$breakpoint}-#{$float}{
+                    float: $float !important;
+                }
+            }
+        } @else {
+            @media screen and (min-width: $value + px) {
+                .float-#{$breakpoint}-#{$float}{
+                    float: $float !important;
+                }
+            }
+        }
+    }
+}
+
+// Display
+
+$displays: (
+    none,
+    block,
+    inline,
+    inline-block,
+    flex,
+    inline-flex
+);
+
+@each $display in $displays {
+    .d-#{$display}{
+        display: $display !important;
+    }
+
+    @each $breakpoint, $value in $breakpoints {
+        @if $breakpoint == xs {
+            @media screen and (max-width: $value + px) {
+                .d-#{$breakpoint}-#{$display}{
+                    display: $display !important;
+                }
+            }
+        } @else {
+            @media screen and (min-width: $value + px) {
+                .d-#{$breakpoint}-#{$display}{
+                    display: $display !important;
+                }
+            }
+        }
+    }
+}
+
+// Backgrounds
+
+@each $color, $color-value in $colors{
+    .bg-#{$color}{
+        background-color: $color-value !important;
+    }
+}
+
+// Positions
+
+$positions: (
+    static,
+    relative,
+    absolute,
+    fixed,
+    sticky
+);
+
+@each $position in $positions {
+    .position-#{$position}{
+        position: $position !important;
+    }
+
+    @each $breakpoint, $breakpoint-value in $breakpoints {
+        @if $breakpoint == xs {
+            @media screen and (max-width: $breakpoint-value + px) {
+                .position-#{$breakpoint}-#{$position}{
+                    position: $position !important;
+                }
+            }
+        } @else {
+            @media screen and (min-width: $breakpoint-value + px) {
+                .position-#{$breakpoint}-#{$position}{
+                    position: $position !important;
+                }
+            }
+        }
+    }
+}
+
+// Text
+
+.text-right{
+    text-align: right;
+}
+
+// Container
+
+.container{
+    width: 80%;
+    max-width: $xl + px;
+    margin: 0 auto;
+}
+
+// Flex/Grid Sub Classes
+
+.align-items-center{
+    align-items: center;
+}
+
+.justify-content-center{
+    justify-content: center;
+}
+
+.space-around{
+    justify-content: space-around;
+}
+
+.space-between{
+    justify-content: space-between;
+}
+
+.space-evenly{
+    justify-content: space-evenly;
+}
+
+// Lists
+
+.list-unstyled li{
+    list-style: none;
+}
+
+.list-inline li{
+    display: inline-block;
+}
+
+// Grid System
+
+$grid-size-max: 12;
+$grid-sizes: ();
+
+@for $i from 1 through $grid-size-max {
+    $grid-sizes: append($grid-sizes, $i, comma);
+}
+
+.grid{
+    display: grid;
+    
+    @each $grid-size in $grid-sizes {
+        &.columns-#{$grid-size}{
+            grid-template-columns: repeat($grid-size, 1fr);
+        }
+
+        @each $breakpoint, $value in $breakpoints {
+            @if $breakpoint == xs {
+                @media screen and (max-width: $value + px) {
+                    &.columns-#{$breakpoint}-#{$grid-size}{
+                        grid-template-columns: repeat($grid-size, 1fr);
+                    }
+                }
+            } @else {
+                @media screen and (min-width: $value + px) {
+                    &.columns-#{$breakpoint}-#{$grid-size}{
+                        grid-template-columns: repeat($grid-size, 1fr);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Padding & Margin
+
+$pm-max: 10;
+$pm-sizes: ();
+
+@for $i from 0 through $pm-max {
+    $pm-sizes: append($pm-sizes, $i, comma);
+}
+
+@each $side-class, $side in $sides {
+    @each $size in $pm-sizes {
+        // Margin
+        .m-#{$size}{
+            margin: $size * 10 + px;
+        }
+
+        .m#{$side-class}-#{$size}{
+            margin-#{$side}: $size * 10 + px;
+        }
+
+        .my-#{$size}{
+            margin-top: $size * 10 + px;
+            margin-bottom: $size * 10 + px;
+        }
+
+        .mx-#{$size}{
+            margin-left: $size * 10 + px;
+            margin-right: $size * 10 + px;
+        }
+
+        // Padding
+        .p-#{$size}{
+            padding: $size * 10 + px;
+        }
+
+        .p#{$side-class}-#{$size}{
+            padding-#{$side}: $size * 10 + px;
+        }
+
+        .py-#{$size}{
+            padding-top: $size * 10 + px;
+            padding-bottom: $size * 10 + px;
+        }
+
+        .px-#{$size}{
+            padding-left: $size * 10 + px;
+            padding-right: $size * 10 + px;
+        }
+
+        @each $breakpoint, $breakpoint-value in $breakpoints {
+            @if $breakpoint == xs {
+                @media screen and (max-width: $breakpoint-value + px) {
+                    .m#{$side-class}-#{$breakpoint}-#{$size}{
+                        margin-#{$side}: $size * 10 + px;
+                    }
+            
+                    .my-#{$breakpoint}-#{$size}{
+                        margin-top: $size * 10 + px;
+                        margin-bottom: $size * 10 + px;
+                    }
+            
+                    .mx-#{$breakpoint}-#{$size}{
+                        margin-left: $size * 10 + px;
+                        margin-right: $size * 10 + px;
+                    }
+
+                    .p#{$side-class}-#{$breakpoint}-#{$size}{
+                        padding-#{$side}: $size * 10 + px;
+                    }
+            
+                    .py-#{$breakpoint}-#{$size}{
+                        padding-top: $size * 10 + px;
+                        padding-bottom: $size * 10 + px;
+                    }
+            
+                    .px-#{$breakpoint}-#{$size}{
+                        padding-left: $size * 10 + px;
+                        padding-right: $size * 10 + px;
+                    }
+                }
+            } @else {
+                @media screen and (min-width: $breakpoint-value + px) {
+                    .m#{$side-class}-#{$breakpoint}-#{$size}{
+                        margin-#{$side}: $size * 10 + px;
+                    }
+            
+                    .my-#{$breakpoint}-#{$size}{
+                        margin-top: $size * 10 + px;
+                        margin-bottom: $size * 10 + px;
+                    }
+            
+                    .mx-#{$breakpoint}-#{$size}{
+                        margin-left: $size * 10 + px;
+                        margin-right: $size * 10 + px;
+                    }
+
+                    .p#{$side-class}-#{$breakpoint}-#{$size}{
+                        padding-#{$side}: $size * 10 + px;
+                    }
+            
+                    .py-#{$breakpoint}-#{$size}{
+                        padding-top: $size * 10 + px;
+                        padding-bottom: $size * 10 + px;
+                    }
+            
+                    .px-#{$breakpoint}-#{$size}{
+                        padding-left: $size * 10 + px;
+                        padding-right: $size * 10 + px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@each $color, $color-value in $colors{
+    // Alerts
+    .alert-#{$color}{
+        padding: 10px;
+        border: 1px solid $color-value;
+        border-left: 5px solid $color-value;
+    }
+
+    // Standouts
+    .standout-#{$color}{
+        padding: 10px;
+        border-left: 5px solid $color-value;
+    }
+
+    // Borders
+    $border-max: 10;
+    $border-sizes: ();
+
+    @for $i from 0 through $border-max {
+        $border-sizes: append($border-sizes, $i, comma);
+    }
+
+    .border-#{$color}{
+        border: 1px solid $color-value;
+    }
+
+    @each $side-class, $side in $sides {
+
+        .border-#{$color}-#{$side}{
+            border-#{$side}: 1px solid $color-value;
+        }
+
+        @each $border-size in $border-sizes{
+
+            .border-#{$border-size}-#{$color}{
+                border: ($border-size + px) solid $color-value;
+            }
+
+            .border-#{$border-size}-#{$color}-#{$side}{
+                border-#{$side}: ($border-size + px) solid $color-value;
+            }
+
+            @each $breakpoint, $breakpoint-value in $breakpoints {
+                @if $breakpoint == xs {
+                    @media screen and (max-width: $breakpoint-value + px) {
+                        .border-#{$breakpoint}-#{$color}{
+                            border: 1px solid $color-value;
+                        }
+
+                        .border-#{$breakpoint}-#{$color}-#{$side}{
+                            border-#{$side}: 1px solid $color-value;
+                        }
+
+                        .border-#{$breakpoint}-#{$border-size}-#{$color}{
+                            border: ($border-size + px) solid $color-value;
+                        }
+            
+                        .border-#{$breakpoint}-#{$border-size}-#{$color}-#{$side}{
+                            border-#{$side}: ($border-size + px) solid $color-value;
+                        }
+                    }
+                } @else {
+                    @media screen and (min-width: $breakpoint-value + px) {
+                        .border-#{$breakpoint}-#{$color}{
+                            border: 1px solid $color-value;
+                        }
+
+                        .border-#{$breakpoint}-#{$color}-#{$side}{
+                            border-#{$side}: 1px solid $color-value;
+                        }
+
+                        .border-#{$breakpoint}-#{$border-size}-#{$color}{
+                            border: ($border-size + px) solid $color-value;
+                        }
+            
+                        .border-#{$breakpoint}-#{$border-size}-#{$color}-#{$side}{
+                            border-#{$side}: ($border-size + px) solid $color-value;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
