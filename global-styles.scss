@@ -1,23 +1,42 @@
 @import './global-variables.scss';
 
-// Initial Global Reset
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6{
+    font-family: $global-font;
+}
+
+p, .p{
     font-family: $global-font;
 }
 
 // Colors
 $colors: (
     primary:$primary,
+    primary-2: $primary-2,
     success:$success,
+    success-2: $success-2,
     info:$info,
+    info-2: $info-2,
     warning:$warning,
+    warning-2: $warning-2,
     danger:$danger,
+    danger-2: $danger-2,
     light:$light,
+    light-2: $light-2,
     dark: $dark,
+    dark-2: $dark-2,
     white: $white,
+    white-2: $white-2,
     transparent: $transparent
 );
 
@@ -46,37 +65,13 @@ $browser-prefixes: (
 );
 
 // Floats
-
 $floats: (
     left,
     right,
     none
 );
 
-@each $float in $floats {
-    .float-#{$float}{
-        float: $float !important;
-    }
-
-    @each $breakpoint, $value in $breakpoints {
-        @if $breakpoint == xs {
-            @media screen and (max-width: $value + px) {
-                .float-#{$breakpoint}-#{$float}{
-                    float: $float !important;
-                }
-            }
-        } @else {
-            @media screen and (min-width: $value + px) {
-                .float-#{$breakpoint}-#{$float}{
-                    float: $float !important;
-                }
-            }
-        }
-    }
-}
-
 // Display
-
 $displays: (
     none,
     block,
@@ -86,38 +81,7 @@ $displays: (
     inline-flex
 );
 
-@each $display in $displays {
-    .d-#{$display}{
-        display: $display !important;
-    }
-
-    @each $breakpoint, $value in $breakpoints {
-        @if $breakpoint == xs {
-            @media screen and (max-width: $value + px) {
-                .d-#{$breakpoint}-#{$display}{
-                    display: $display !important;
-                }
-            }
-        } @else {
-            @media screen and (min-width: $value + px) {
-                .d-#{$breakpoint}-#{$display}{
-                    display: $display !important;
-                }
-            }
-        }
-    }
-}
-
-// Backgrounds
-
-@each $color, $color-value in $colors{
-    .bg-#{$color}{
-        background-color: $color-value !important;
-    }
-}
-
-// Positions
-
+// Positions\
 $positions: (
     static,
     relative,
@@ -126,43 +90,99 @@ $positions: (
     sticky
 );
 
-@each $position in $positions {
-    .position-#{$position}{
-        position: $position !important;
-    }
+// Container
+.container{
+    width: 90%;
+    max-width: $xl + px;
+    margin: 0 auto;
+}
 
-    @each $breakpoint, $breakpoint-value in $breakpoints {
-        @if $breakpoint == xs {
-            @media screen and (max-width: $breakpoint-value + px) {
-                .position-#{$breakpoint}-#{$position}{
-                    position: $position !important;
-                }
-            }
-        } @else {
-            @media screen and (min-width: $breakpoint-value + px) {
-                .position-#{$breakpoint}-#{$position}{
-                    position: $position !important;
-                }
+// Widths & Heights (Start)
+
+.w-100{
+    width: 100%;
+}
+
+.w-75{
+    width: 75%;
+}
+
+.w-50{
+    width: 50%;
+}
+
+.w-25{
+    width: 25%;
+}
+
+.h-100{
+    height: 100%;
+}
+
+.h-75{
+    height: 75%;
+}
+
+.h-50{
+    height: 50%;
+}
+
+.h-25{
+    height: 25%;
+}
+
+// Widths & Heights (End)
+
+// Buttons (Start)
+
+.btn{
+    padding: 1rem;
+    border: none;
+    color: white;
+
+    @each $color, $color-value in $colors{
+        &.btn-#{$color}{
+            background: $color-value;
+            transition: .2s;
+
+            &:hover{
+                cursor: pointer;
+                background: darken($color-value, 10%);
+                
             }
         }
     }
 }
 
-// Text
+// Buttons (End)
 
-.text-right{
-    text-align: right;
+@each $breakpoint, $value in $breakpoints {
+    @if $breakpoint == xs {
+        @media screen and (max-width: $value) {
+            
+        }
+    } @else if $breakpoint == sm {   
+        @media screen and (min-width: $value) {
+            .container{
+                width: 80%;
+            }
+        }
+    } @else if $breakpoint == md {   
+        @media screen and (min-width: $value) {
+            .container{
+                width: 80%;
+            }
+        }
+    } @else {
+        @media screen and (min-width: $value) {
+            .container{
+                width: 70%;
+            }
+        }
+    }
 }
 
-// Container
-
-.container{
-    width: 80%;
-    max-width: $xl + px;
-    margin: 0 auto;
-}
-
-// Flex/Grid Sub Classes
+// Flex/Grid Sub Classes (Start)
 
 .align-items-center{
     align-items: center;
@@ -184,17 +204,25 @@ $positions: (
     justify-content: space-evenly;
 }
 
-// Lists
+// Flex/Grid Sub Classes (End)
 
-.list-unstyled li{
-    list-style: none;
+// Text
+
+.text-right{
+    text-align: right;
 }
 
-.list-inline li{
-    display: inline-block;
+.text-center{
+    text-align: center;
 }
 
-// Grid System
+// Flex
+
+.grid > .align-items-center{
+    align-items: center;
+}
+
+// Grid System (Start)
 
 $grid-size-max: 12;
 $grid-sizes: ();
@@ -205,29 +233,50 @@ $grid-sizes: ();
 
 .grid{
     display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
     
     @each $grid-size in $grid-sizes {
         &.columns-#{$grid-size}{
-            grid-template-columns: repeat($grid-size, 1fr);
+            grid-template-columns: repeat($grid-size, 1fr) !important;
+        }
+
+        & > .column-#{$grid-size}{
+            grid-column: span $grid-size;
         }
 
         @each $breakpoint, $value in $breakpoints {
             @if $breakpoint == xs {
-                @media screen and (max-width: $value + px) {
+                @media screen and (max-width: $value) {
                     &.columns-#{$breakpoint}-#{$grid-size}{
-                        grid-template-columns: repeat($grid-size, 1fr);
+                        grid-template-columns: repeat($grid-size, 1fr) !important;
+                    }
+
+                    & > .column-#{$breakpoint}-#{$grid-size}{
+                        grid-column: span $grid-size;
                     }
                 }
-            } @else {
-                @media screen and (min-width: $value + px) {
+            } @else {   
+                @media screen and (min-width: $value) {
+                    &{
+                        grid-template-columns: repeat(12, 1fr);
+                        gap: 3rem;
+                    }
+
                     &.columns-#{$breakpoint}-#{$grid-size}{
-                        grid-template-columns: repeat($grid-size, 1fr);
+                        grid-template-columns: repeat($grid-size, 1fr) !important;
+                    }
+
+                    & > .column-#{$breakpoint}-#{$grid-size}{
+                        grid-column: span $grid-size;
                     }
                 }
             }
         }
     }
 }
+
+// Grid System (End)
 
 // Padding & Margin
 
@@ -280,7 +329,7 @@ $pm-sizes: ();
 
         @each $breakpoint, $breakpoint-value in $breakpoints {
             @if $breakpoint == xs {
-                @media screen and (max-width: $breakpoint-value + px) {
+                @media screen and (max-width: ($breakpoint-value + px)) {
                     .m#{$side-class}-#{$breakpoint}-#{$size}{
                         margin-#{$side}: $size * 10 + px;
                     }
@@ -310,7 +359,7 @@ $pm-sizes: ();
                     }
                 }
             } @else {
-                @media screen and (min-width: $breakpoint-value + px) {
+                @media screen and (min-width: ($breakpoint-value + px)) {
                     .m#{$side-class}-#{$breakpoint}-#{$size}{
                         margin-#{$side}: $size * 10 + px;
                     }
@@ -366,11 +415,19 @@ $pm-sizes: ();
         $border-sizes: append($border-sizes, $i, comma);
     }
 
+    .border{
+        border: 1px solid $light;
+    }
+
     .border-#{$color}{
         border: 1px solid $color-value;
     }
 
     @each $side-class, $side in $sides {
+
+        .border-#{$side}{
+            border-#{$side}: 1px solid $light;
+        }
 
         .border-#{$color}-#{$side}{
             border-#{$side}: 1px solid $color-value;
@@ -388,7 +445,7 @@ $pm-sizes: ();
 
             @each $breakpoint, $breakpoint-value in $breakpoints {
                 @if $breakpoint == xs {
-                    @media screen and (max-width: $breakpoint-value + px) {
+                    @media screen and (max-width: ($breakpoint-value + px)) {
                         .border-#{$breakpoint}-#{$color}{
                             border: 1px solid $color-value;
                         }
@@ -406,7 +463,7 @@ $pm-sizes: ();
                         }
                     }
                 } @else {
-                    @media screen and (min-width: $breakpoint-value + px) {
+                    @media screen and (min-width: ($breakpoint-value + px)) {
                         .border-#{$breakpoint}-#{$color}{
                             border: 1px solid $color-value;
                         }
@@ -423,6 +480,28 @@ $pm-sizes: ();
                             border-#{$side}: ($border-size + px) solid $color-value;
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@each $display in $displays {
+    .d-#{$display}{
+        display: $display !important;
+    }
+
+    @each $breakpoint, $value in $breakpoints {
+        @if $breakpoint == xs {
+            @media screen and (max-width: $value + px) {
+                .d-#{$breakpoint}-#{$display}{
+                    display: $display !important;
+                }
+            }
+        } @else {
+            @media screen and (min-width: $value + px) {
+                .d-#{$breakpoint}-#{$display}{
+                    display: $display !important;
                 }
             }
         }
