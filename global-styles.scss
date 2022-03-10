@@ -4,34 +4,75 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: $global-font;
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
+h1, .h1{
+    font-size: 2rem;
+}
+
+h2, .h2{
+    font-size: 1.75rem;
+}
+
+h3, .h3{
+    font-size: 1.50rem;
+}
+
+h4, .h4{
+    font-size: 1.25rem;
+}
+
+h5, .h5{
+    font-size: 1rem;
+}
+
 h6, .h6{
-    font-family: $global-font;
+    font-size: .75rem;
 }
 
 p, .p{
     font-family: $global-font;
 }
 
+input{
+    padding: 10px;
+    width: 100%;
+    display: block;
+    border-radius: 0px;
+    border: 1px solid $light;
+    outline: none;
+    color: $dark;
+}
+
+.profile-mini-input{
+    position: absolute;
+    top: 5px;
+    right: -100px;
+    width: 100px;
+    transition: right .5s;
+    z-index: 10;
+}
+
+.profile-mini:hover{
+    .profile-mini-input{
+        right: 5px;
+    }
+}
+
 // Colors
 $colors: (
-    primary:$primary,
+    primary: $primary,
     primary-2: $primary-2,
-    success:$success,
+    success: $success,
     success-2: $success-2,
-    info:$info,
+    info: $info,
     info-2: $info-2,
-    warning:$warning,
+    warning: $warning,
     warning-2: $warning-2,
-    danger:$danger,
+    danger: $danger,
     danger-2: $danger-2,
-    light:$light,
+    light: $light,
     light-2: $light-2,
     dark: $dark,
     dark-2: $dark-2,
@@ -97,6 +138,22 @@ $positions: (
     margin: 0 auto;
 }
 
+// Rounded Classes
+.rounded{
+    border-radius: 1rem;
+}
+
+// Pointer
+.pointer:hover{
+    cursor: pointer;
+}
+
+// Sticky Positions
+.sticky-top{
+    position: sticky;
+    top: 0;
+}
+
 // Widths & Heights (Start)
 
 .w-100{
@@ -133,6 +190,20 @@ $positions: (
 
 // Widths & Heights (End)
 
+// Positions
+.position-relative{
+    position: relative;
+}
+
+.position-absolute{
+    position: absolute;
+}
+
+// Overflow
+.overflow-hidden{
+    overflow: hidden;
+}
+
 // Buttons (Start)
 
 .btn{
@@ -143,7 +214,7 @@ $positions: (
     @each $color, $color-value in $colors{
         &.btn-#{$color}{
             background: $color-value;
-            transition: .2s;
+            transition: background-color .2s;
 
             &:hover{
                 cursor: pointer;
@@ -214,6 +285,10 @@ $positions: (
 
 .text-center{
     text-align: center;
+}
+
+.text-decoration-none{
+    text-decoration: none;
 }
 
 // Flex
@@ -394,6 +469,16 @@ $pm-sizes: ();
 }
 
 @each $color, $color-value in $colors{
+    // Text
+    .text-#{$color}{
+        color: $color-value;
+    }
+
+    // Backgrounds
+    .bg-#{$color}{
+        background: $color-value;
+    }
+
     // Alerts
     .alert-#{$color}{
         padding: 10px;
@@ -424,7 +509,6 @@ $pm-sizes: ();
     }
 
     @each $side-class, $side in $sides {
-
         .border-#{$side}{
             border-#{$side}: 1px solid $light;
         }
@@ -493,13 +577,13 @@ $pm-sizes: ();
 
     @each $breakpoint, $value in $breakpoints {
         @if $breakpoint == xs {
-            @media screen and (max-width: $value + px) {
+            @media screen and (max-width: ($value + px)) {
                 .d-#{$breakpoint}-#{$display}{
                     display: $display !important;
                 }
             }
         } @else {
-            @media screen and (min-width: $value + px) {
+            @media screen and (min-width: ($value + px)) {
                 .d-#{$breakpoint}-#{$display}{
                     display: $display !important;
                 }
